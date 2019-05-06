@@ -69,11 +69,13 @@ def userinput():
 		Furtherdata = input(" Want to feed more data ? yes/no ")
 		if Furtherdata == "yes":
 			continue
-		elif Furtherdata == "no":
+		#elif Furtherdata == "no":
+		else:
 			break
 	print(json.dumps(root, sort_keys=True, indent=4))
 
 def main():
+	#print(len(sys.argv))
 	if len(sys.argv) == 2:
 		try:
 			#print(sys.argv[1])
@@ -81,8 +83,9 @@ def main():
 			inputfilefun()
 		except FileNotFoundError:
 			print("Inputfile is not available, pleasse check")
-	elif len(sys.argv) < 2:
-		print("Unknown no of arguments")
+	elif len(sys.argv) > 2:
+		print("Unknown no of arguments, please pass only one input file ")
+		print("e.g., python3 "+sys.argv[0]+" <Input file>")
 		exit()
 	else:
 		userinput()
