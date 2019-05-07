@@ -6,30 +6,19 @@ import os
 root = {}
 root["Person"] = []
 
-def inputfilefun():
+def input_from_file():
 	input_file = sys.argv[1]
-
 	csv.register_dialect('myDialect', delimiter = ',',quoting=csv.QUOTE_ALL,skipinitialspace=True)
 	declared_headers = []
 	csv_rows = []
 	with open(input_file,'r') as csvFile:
-		# csvEachLine = csv.reader(csvFile, dialect="myDialect")
-		# reader = csv.DictReader(csvFile)
 		reader = csv.DictReader(csvFile)  
-	# Parse the CSV into JSON  
 		root["Person"] = [row for row in reader]
-		# del root["Person"][0]
-		# del out[0]
-		print(json.dumps(root, sort_keys=True, indent=4))
+		for i in root["Person"]:
+			i.pop("nationality", None)
+		print(json.dumps(root, indent=4))
 
-		# out.delete
-		# field = reader.fileNames
-		# print(field)
-		# for row in reader
-		# 	csv_rows.extend([{field[i]:row[field[i]] for i in range(len(field))}])
-		# print(csv_rows)
-
-def userinput():
+def user_input():
 	print("Proceeding User input ..")
 	while True:
 		# User data from input 
@@ -64,31 +53,26 @@ def userinput():
 		data['favourite_color'] = favourite_color
 		root["Person"].append(data)
 
-		# print(json_data)
-
 		Furtherdata = input(" Want to feed more data ? yes/no ")
 		if Furtherdata == "yes":
 			continue
-		#elif Furtherdata == "no":
 		else:
 			break
 	print(json.dumps(root, sort_keys=True, indent=4))
 
 def main():
-	#print(len(sys.argv))
 	if len(sys.argv) == 2:
 		try:
-			#print(sys.argv[1])
 			fh = open(sys.argv[1],"r")
-			inputfilefun()
+			input_from_file()
 		except FileNotFoundError:
-			print("Inputfile is not available, pleasse check")
+			print("Input file is not available!! please check")
 	elif len(sys.argv) > 2:
-		print("Unknown no of arguments, please pass only one input file ")
+		print("Unknown no.of arguments, please pass only one input file ")
 		print("e.g., python3 "+sys.argv[0]+" <Input file>")
 		exit()
 	else:
-		userinput()
+		user_input()
 
 if __name__ == "__main__":
 	main()
